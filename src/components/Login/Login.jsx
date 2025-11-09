@@ -9,15 +9,31 @@ import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
  * - isLoading: boolean  // disables buttons & shows loading states
  */
 const Login = () => {
-      const [submitError, setSubmitError] = useState("");
-    
-    const { user, isLoading, signInWithEmailPass,signInWithGoogle,SetUser } = use(AuthContext);
-    console.log(user);
+    const [error, SetError] = useState("");
+    const [submitError, setSubmitError] = useState("");
+
+    const { user, isLoading, signInWithEmailPass, signInWithGoogle, SetUser } = use(AuthContext);
+    // console.log(user);
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        const email = e.target.email.value || "";
+        const password = e.target.password.value || "";
+        // console.log(email, password);
+        signInWithEmailPass(email, password)
+            .then(() => {
+                
+                console.log("OK")
+                // Signed in
+                // navigate(redirectTo, { replace: true });
+            })
+            .catch(() => {
+                SetError("Invalid Email or Password");
+            }).finally(() => {
+                // SetIsLogin(false);
+            }
+            );
     };
-
+    // console.log(user);
     // google Login
     const onGoogleLogin = () => {
         setSubmitError("");
@@ -84,6 +100,12 @@ const Login = () => {
                                     Forgot password?
                                 </NavLink>
                             </div>
+                            {/* ⛔ Error box below the form (shows pwError or submitError) */}
+                            {(submitError) && (
+                                <div className="mt-4 alert alert-error py-1 font-semibold">
+                                    {submitError}
+                                </div>
+                            )}
                             {/* Login button */}
                             <button
                                 type="submit"

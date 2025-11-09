@@ -1,6 +1,7 @@
-import React, { use, useEffect, useMemo, useState } from "react";
+import React, { use, useContext, useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router";
 import ThemeContext from "../../contexts/Theme/themeContext";
+import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
 
 /** Active link styles */
 const linkClasses = ({ isActive }) =>
@@ -16,6 +17,7 @@ const NavBar = () => {
 
   // TEMP ONLY: preview logged-in vs logged-out
   const [isLoggedIn] = useState(false);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -27,7 +29,7 @@ const NavBar = () => {
   // Build nav items (Login/Register appear only here when logged out)
   const navItems = useMemo(
     () =>
-      isLoggedIn
+      user
         ? [
             { to: "/", label: "Home" },
             { to: "/partners", label: "Find Partners" },
@@ -40,7 +42,7 @@ const NavBar = () => {
             { to: "/login", label: "Login" },
             { to: "/register", label: "Register" },
           ],
-    [isLoggedIn]
+    [user]
   );
 
   return (
