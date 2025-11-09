@@ -3,6 +3,7 @@ import HomeLayout from "../layouts/homeLayout/HomeLayout";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import UserProfile from "../components/UserProfile/UserProfile";
+import Home from "../pages/Home/Home";
 
 const router = createBrowserRouter([{
     path: '/',
@@ -10,7 +11,7 @@ const router = createBrowserRouter([{
     children: [
         {
             index: true,
-            element: <div>Bal</div>
+            Component: Home
         },
         {
             path: '/login',
