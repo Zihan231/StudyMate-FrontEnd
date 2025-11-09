@@ -150,7 +150,7 @@ const Register = () => {
                     <span className="label-text-alt text-error">{pwError}</span>
                   ) : (
                     <span className="label-text-alt text-base-content/60">
-                      Must include at least 1 uppercase, 1 lowercase, and be 6+ characters.
+                      Must have at least 1 uppercase, 1 lowercase, and 6+ characters.
                     </span>
                   )}
                 </div>

@@ -16,9 +16,8 @@ const NavBar = () => {
   const { darkMode, setDarkMode } = use(ThemeContext);
 
   // TEMP ONLY: preview logged-in vs logged-out
-  const [isLoggedIn] = useState(false);
   const { user, logout } = useContext(AuthContext);
-
+  console.log(user?.photoURL);
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -88,7 +87,8 @@ const NavBar = () => {
                 <div className="w-10 rounded-full ring ring-primary/30 ring-offset-2 ring-offset-base-100">
                   <img
                     alt="User avatar"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    referrerPolicy="no-referrer"
+                    src={user?.photoURL}
                   />
                 </div>
               </button>
@@ -142,7 +142,7 @@ const NavBar = () => {
             </div>
           )}
         </div>
-        
+
 
         {/* Right: Theme toggle + Avatar (avatar only when logged in) */}
         <div className="flex-none items-center gap-1">
@@ -169,7 +169,7 @@ const NavBar = () => {
             )}
           </button>
 
-          
+
 
 
           {/* Mobile menu (shows same list; desktop links are hidden on md-) */}
