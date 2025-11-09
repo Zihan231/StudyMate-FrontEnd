@@ -12,7 +12,7 @@ const Login = () => {
     const [error, SetError] = useState("");
     const [submitError, setSubmitError] = useState("");
 
-    const { user, isLoading, signInWithEmailPass, signInWithGoogle, SetUser } = use(AuthContext);
+    const { isLoading, signInWithEmailPass, signInWithGoogle, SetUser } = use(AuthContext);
     // console.log(user);
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -96,14 +96,14 @@ const Login = () => {
                             </label>
                             <div className="label mt-2">
                                 <span className="label-text">Password</span>
-                                <NavLink to="/forgot-password" className="label-text-alt link link-hover">
+                                <NavLink to="/login" className="label-text-alt link link-hover">
                                     Forgot password?
                                 </NavLink>
                             </div>
                             {/* ⛔ Error box below the form (shows pwError or submitError) */}
-                            {(submitError) && (
+                            {(submitError || error) && (
                                 <div className="mt-4 alert alert-error py-1 font-semibold">
-                                    {submitError}
+                                    {submitError || error}
                                 </div>
                             )}
                             {/* Login button */}

@@ -17,7 +17,7 @@ const NavBar = () => {
 
   // TEMP ONLY: preview logged-in vs logged-out
   const [isLoggedIn] = useState(false);
-  const { user } = useContext(AuthContext);
+  const { user,logout } = useContext(AuthContext);
 
   useEffect(() => {
     document.documentElement.setAttribute(
@@ -31,20 +31,24 @@ const NavBar = () => {
     () =>
       user
         ? [
-            { to: "/", label: "Home" },
-            { to: "/partners", label: "Find Partners" },
-            { to: "/create-partner", label: "Create Partner Profile" },
-            { to: "/connections", label: "My Connections" },
-          ]
+          { to: "/", label: "Home" },
+          { to: "/partners", label: "Find Partners" },
+          { to: "/create-partner", label: "Create Partner Profile" },
+          { to: "/connections", label: "My Connections" },
+        ]
         : [
-            { to: "/", label: "Home" },
-            { to: "/partners", label: "Find Partners" },
-            { to: "/login", label: "Login" },
-            { to: "/register", label: "Register" },
-          ],
+          { to: "/", label: "Home" },
+          { to: "/partners", label: "Find Partners" },
+          { to: "/login", label: "Login" },
+          { to: "/register", label: "Register" },
+        ],
     [user]
   );
 
+  // Log out
+  const handleLogout = () => {
+    logout()
+  }
   return (
     <header className="sticky top-0 z-50">
       <div className="navbar bg-base-100/90 backdrop-blur shadow-sm border-b border-base-300">
@@ -52,7 +56,7 @@ const NavBar = () => {
         <div className="flex-1">
           <NavLink to="/" className="btn btn-ghost px-2">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-gradient-to-br from-primary to-secondary shadow">
+              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-linear-to-br from-primary to-secondary shadow">
                 S
               </div>
               <span className="text-lg md:text-xl font-extrabold tracking-tight">StudyMate</span>
@@ -70,6 +74,32 @@ const NavBar = () => {
                 </NavLink>
               </li>
             ))}
+            {user && (
+              <button
+                onClick={handleLogout}
+                className="btn btn-error btn-sm px-4 font-medium text-base-100 
+               rounded-md shadow-sm hover:shadow transition-all duration-150
+               hover:brightness-105 focus:outline-none focus-visible:ring-2 
+               focus-visible:ring-error focus-visible:ring-offset-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.6}
+                  stroke="currentColor"
+                  className="w-4 h-4 mr-1.5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                  />
+                </svg>
+                Log&nbsp;Out
+              </button>
+            )}
+
           </ul>
         </div>
 
@@ -84,16 +114,16 @@ const NavBar = () => {
           >
             {darkMode ? (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                      d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
               </svg>
             ) : (
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
-                   viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <circle cx="12" cy="12" r="4" strokeWidth="2" />
                 <path strokeLinecap="round" strokeWidth="2"
-                      d="M12 2v2M12 20v2M2 12h2M20 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/>
+                  d="M12 2v2M12 20v2M2 12h2M20 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
               </svg>
             )}
           </button>
@@ -124,7 +154,7 @@ const NavBar = () => {
             <div tabIndex={0} role="button" className="btn btn-ghost btn-square">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M4 6h16M4 12h16M4 18h16"
-                      stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </div>
             <ul
