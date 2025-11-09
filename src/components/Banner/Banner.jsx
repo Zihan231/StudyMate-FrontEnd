@@ -31,7 +31,9 @@ const Banner = () => {
         <>
             {
                 loading ? (
-                    <div>Loader</div>
+                    <div className="flex items-center justify-center min-h-[300px]">
+                        <HashLoader color="#73abff" size={80} />
+                    </div>
                 ) :
                     (
                         <section className="relative bg-base-100">
