@@ -1,0 +1,145 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* ---------- StudyMate — Light (Default) ---------- */
+@plugin "daisyui/theme" {
+  name: "studymate";
+  default: true;               /* make it the default theme */
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Base surface & content */
+  --color-base-100: oklch(98% 0.02 250);  /* page background: near-white with a cool hint */
+  --color-base-200: oklch(96% 0.03 250);  /* cards */
+  --color-base-300: oklch(92% 0.04 250);  /* subtle separators */
+  --color-base-content: oklch(22% 0.04 250); /* primary text (almost black, cool-neutral) */
+
+  /* Brand + accents (indigo primary, violet secondary, teal accent) */
+  --color-primary: oklch(58% 0.20 265);          /* indigo 600 vibe */
+  --color-primary-content: oklch(98% 0.01 250);  /* on-primary text */
+
+  --color-secondary: oklch(62% 0.22 300);        /* violet 500–600 */
+  --color-secondary-content: oklch(98% 0.01 300);
+
+  --color-accent: oklch(70% 0.16 170);           /* teal/mint 400–500 */
+  --color-accent-content: oklch(12% 0.03 170);
+
+  /* Neutrals for borders/icons */
+  --color-neutral: oklch(55% 0.04 250);          /* cool gray */
+  --color-neutral-content: oklch(98% 0.01 250);
+
+  /* State colors (info/success/warn/error) */
+  --color-info: oklch(68% 0.12 240);             /* academic blue */
+  --color-info-content: oklch(98% 0.01 240);
+
+  --color-success: oklch(62% 0.15 150);          /* gentle green */
+  --color-success-content: oklch(98% 0.01 150);
+
+  --color-warning: oklch(78% 0.14 85);           /* amber */
+  --color-warning-content: oklch(22% 0.03 85);
+
+  --color-error: oklch(58% 0.20 25);             /* soft red */
+  --color-error-content: oklch(98% 0.01 25);
+
+  /* Elevation, radii & borders (sleek + consistent) */
+  --radius-selector: 0.9rem;   /* dropdowns, menus */
+  --radius-field: 0.5rem;      /* inputs, badges */
+  --radius-box: 1rem;          /* cards, modals */
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;                  /* DaisyUI shadow depth */
+  --noise: 0;                  /* remove background noise */
+
+  /* Optional fine-tuning */
+  --tab-border: var(--color-base-300);
+  --tab-radius: 0.75rem;
+
+  /* Better focus ring for accessibility */
+  --focus: color-mix(in oklab, var(--color-primary) 60%, white 40%);
+}
+
+/* ---------- StudyMate — Dark ---------- */
+@plugin "daisyui/theme" {
+  name: "studymate-dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: oklch(22% 0.03 250);   /* canvas */
+  --color-base-200: oklch(18% 0.03 250);   /* elevated */
+  --color-base-300: oklch(30% 0.04 250);   /* subtle separators */
+  --color-base-content: oklch(95% 0.02 250);
+
+  --color-primary: oklch(72% 0.19 265);    /* brighten for dark mode contrast */
+  --color-primary-content: oklch(14% 0.02 265);
+
+  --color-secondary: oklch(75% 0.20 300);
+  --color-secondary-content: oklch(14% 0.02 300);
+
+  --color-accent: oklch(78% 0.15 170);
+  --color-accent-content: oklch(14% 0.02 170);
+
+  --color-neutral: oklch(60% 0.04 250);
+  --color-neutral-content: oklch(10% 0.02 250);
+
+  --color-info: oklch(82% 0.12 240);
+  --color-info-content: oklch(14% 0.02 240);
+
+  --color-success: oklch(78% 0.13 150);
+  --color-success-content: oklch(14% 0.02 150);
+
+  --color-warning: oklch(86% 0.13 85);
+  --color-warning-content: oklch(20% 0.03 85);
+
+  --color-error: oklch(78% 0.18 25);
+  --color-error-content: oklch(14% 0.02 25);
+
+  --radius-selector: 0.9rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 1;
+  --noise: 0;
+
+  --tab-border: color-mix(in oklab, var(--color-base-300) 70%, white 30%);
+  --tab-radius: 0.75rem;
+  --focus: color-mix(in oklab, var(--color-primary) 60%, white 40%);
+}
+
+/* ---------- (Optional) Component polish ---------- */
+/* Slightly stronger card shadow and hover lift for a “professional” feel */
+.card {
+  box-shadow: 0 4px 18px color-mix(in oklab, black 8%, transparent);
+}
+.card:hover {
+  transform: translateY(-2px);
+  transition: transform 200ms ease;
+}
+
+/* Buttons: crisp focus ring + subtle weight */
+.btn {
+  font-weight: 600;
+  outline: none;
+}
+.btn:focus-visible {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--focus) 60%, transparent);
+}
+
+/* Inputs: consistent radius + border */
+.input, .select, .textarea {
+  border-radius: var(--radius-field);
+  border-width: var(--border);
+}
+
+/* Tabs & badges for the “Find Partners” and “My Connections” UIs */
+.tabs .tab {
+  border-radius: var(--tab-radius);
+  border: 1px solid var(--tab-border);
+}
+.badge {
+  border-radius: 9999px;
+  font-weight: 600;
+}
