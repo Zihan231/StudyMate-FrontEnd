@@ -12,12 +12,9 @@ const linkClasses = ({ isActive }) =>
   ].join(" ");
 
 const NavBar = () => {
-  // theme from your context
   const { darkMode, setDarkMode } = use(ThemeContext);
-
-  // TEMP ONLY: preview logged-in vs logged-out
   const { user, logout } = useContext(AuthContext);
-  console.log(user?.photoURL);
+
   useEffect(() => {
     document.documentElement.setAttribute(
       "data-theme",
@@ -25,46 +22,43 @@ const NavBar = () => {
     );
   }, [darkMode]);
 
-  // Build nav items (Login/Register appear only here when logged out)
+  const handleLogout = () => logout();
+
   const navItems = useMemo(
     () =>
       user
         ? [
-          { to: "/", label: "Home" },
-          { to: "/partners", label: "Find Partners" },
-          { to: "/create-partner", label: "Create Partner Profile" },
-          { to: "/connections", label: "My Connections" },
-        ]
+            { to: "/", label: "Home" },
+            { to: "/partners", label: "Find Partners" },
+            { to: "/create-partner", label: "Create Partner Profile" },
+            { to: "/connections", label: "My Connections" },
+          ]
         : [
-          { to: "/", label: "Home" },
-          { to: "/partners", label: "Find Partners" },
-          { to: "/login", label: "Login" },
-          { to: "/register", label: "Register" },
-        ],
+            { to: "/", label: "Home" },
+            { to: "/partners", label: "Find Partners" },
+          ],
     [user]
   );
 
-  // Log out
-  const handleLogout = () => {
-    logout();
-  }
   return (
     <header className="sticky top-0 z-50">
-      <div className="navbar bg-base-100/90 backdrop-blur shadow-sm border-b border-base-300">
+      <div className="navbar bg-base-100/90 backdrop-blur shadow-sm border-b border-base-300 px-6 md:px-32">
         {/* Left: Brand */}
         <div className="flex-1">
           <NavLink to="/" className="btn btn-ghost px-2">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-linear-to-br from-primary to-secondary shadow">
+              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-gradient-to-br from-primary to-secondary shadow">
                 SM
               </div>
-              <span className="text-lg md:text-xl font-extrabold tracking-tight">StudyMate</span>
+              <span className="text-lg md:text-xl font-extrabold tracking-tight">
+                StudyMate
+              </span>
             </div>
           </NavLink>
         </div>
 
-        {/* Desktop links (the ONLY place Login/Register show when logged out) */}
-        <div className="hidden md:flex items-center">
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center gap-3">
           <ul className="menu menu-horizontal gap-1">
             {navItems.map((item) => (
               <li key={item.to}>
@@ -74,17 +68,24 @@ const NavBar = () => {
               </li>
             ))}
           </ul>
-          {/* Avatar dropdown only when logged in */}
+
+          {/* 🔹 Auth Buttons when logged out */}
+          {!user && (
+            <div className="flex items-center gap-2 ml-4">
+              <NavLink to="/login" className="btn btn-outline btn-sm">
+                Login
+              </NavLink>
+              <NavLink to="/register" className="btn btn-primary btn-sm text-primary-content">
+                Register
+              </NavLink>
+            </div>
+          )}
+
+          {/* Avatar dropdown when logged in */}
           {user && (
-            <div className="dropdown dropdown-end mr-2">
-              {/* trigger */}
-              <button
-                tabIndex={0}
-                className="btn btn-ghost btn-circle avatar"
-                aria-haspopup="menu"
-                aria-expanded="false"
-              >
-                <div className="w-10 rounded-full ring ring-primary/30 ring-offset-2 ring-offset-base-100">
+            <div className="dropdown dropdown-end">
+              <button tabIndex={0} className="btn btn-ghost btn-circle avatar mr-2">
+                <div className="w-10 rounded-full ring ring-primary/30 ring-offset-2 ring-offset-base-100 overflow-hidden">
                   <img
                     alt="User avatar"
                     referrerPolicy="no-referrer"
@@ -93,17 +94,13 @@ const NavBar = () => {
                 </div>
               </button>
 
-              {/* menu */}
               <ul
                 tabIndex={0}
                 role="menu"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 
-                 shadow-xl border border-base-300/60"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 shadow-xl border border-base-300/60"
               >
-                {/* Profile */}
-                <li role="none">
+                <li>
                   <NavLink
-                    role="menuitem"
                     to="/profile"
                     className="rounded-md px-2 text-sm py-2 hover:bg-base-300/60 transition font-bold"
                   >
@@ -113,13 +110,10 @@ const NavBar = () => {
 
                 <div className="divider my-2" />
 
-                {/* Log out (menu style, not big button) */}
-                <li role="none">
+                <li>
                   <button
-                    role="menuitem"
                     onClick={handleLogout}
-                    className="rounded-md px-2 py-2 text-error font-bold hover:bg-error/10 hover:text-error 
-                     transition flex items-center gap-2"
+                    className="rounded-md px-2 py-2 text-error font-bold hover:bg-error/10 hover:text-error transition flex items-center gap-2"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -143,10 +137,9 @@ const NavBar = () => {
           )}
         </div>
 
-
-        {/* Right: Theme toggle + Avatar (avatar only when logged in) */}
+        {/* Right: Theme Toggle + Mobile Menu */}
         <div className="flex-none items-center gap-1">
-          {/* Theme toggle */}
+          {/* Theme Toggle */}
           <button
             aria-label="Toggle theme"
             className="btn btn-ghost btn-circle"
@@ -154,58 +147,99 @@ const NavBar = () => {
             title={darkMode ? "Light mode" : "Dark mode"}
           >
             {darkMode ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                />
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
                 <circle cx="12" cy="12" r="4" strokeWidth="2" />
-                <path strokeLinecap="round" strokeWidth="2"
-                  d="M12 2v2M12 20v2M2 12h2M20 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                <path
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  d="M12 2v2M12 20v2M2 12h2M20 12h2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"
+                />
               </svg>
             )}
           </button>
+          {/* Mobile menu (visible on < md) */}
+<div className="md:hidden dropdown dropdown-end">
+  <button
+    tabIndex={0}
+    aria-label="Open menu"
+    className="btn btn-ghost btn-square"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 6h16M4 12h16M4 18h16"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  </button>
 
+  <ul
+    tabIndex={0}
+    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-64 p-2 shadow-xl border border-base-300/60"
+  >
+    {/* Core nav items */}
+    {navItems.map((item) => (
+      <li key={item.to}>
+        <NavLink to={item.to} className={linkClasses}>
+          {item.label}
+        </NavLink>
+      </li>
+    ))}
 
+    {/* When logged OUT: show Login/Register buttons */}
+    {!user && (
+      <li className="mt-2">
+        <div className="flex gap-2">
+          <NavLink to="/login" className="btn btn-outline btn-sm flex-1">
+            Login
+          </NavLink>
+          <NavLink to="/register" className="btn btn-primary btn-sm text-primary-content flex-1">
+            Register
+          </NavLink>
+        </div>
+      </li>
+    )}
 
+    {/* When logged IN: Profile + Logout */}
+    {user && (
+      <>
+        <div className="divider my-2" />
+        <li>
+          <NavLink to="/profile" className="font-semibold">
+            Profile
+          </NavLink>
+        </li>
+        <li>
+          <button
+            onClick={handleLogout}
+            className="px-3 py-2 rounded-lg text-left text-error hover:bg-error/10 font-semibold"
+          >
+            Log Out
+          </button>
+        </li>
+      </>
+    )}
+  </ul>
+</div>
 
-          {/* Mobile menu (shows same list; desktop links are hidden on md-) */}
-          <div className="md:hidden dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-square">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 6h16M4 12h16M4 18h16"
-                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-64 p-2 shadow"
-            >
-              {navItems.map((item) => (
-                <li key={item.to}>
-                  <NavLink to={item.to} className={linkClasses}>
-                    {item.label}
-                  </NavLink>
-                </li>
-              ))}
-
-              {/* Extra mobile-only actions when logged in */}
-              {user && (
-                <>
-                  <div className="divider my-2" />
-                  <li className="font-bold"><NavLink to="/profile">Profile</NavLink></li>
-                  <li>
-                    <button className="px-3 py-2 rounded-lg text-left text-error hover:bg-error/10 font-bold">
-                      Logout
-                    </button>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
         </div>
       </div>
     </header>
