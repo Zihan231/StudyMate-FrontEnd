@@ -84,6 +84,7 @@ const FindPartners = () => {
 
                         {/* Controls */}
                         <div className="w-full sm:w-auto flex items-center gap-2">
+                            {/* Sort */}
                             <select
                                 className="select select-bordered select-sm"
                                 value={sort}
@@ -100,25 +101,30 @@ const FindPartners = () => {
                                 <option value="exp_asc">Experience: Beginner → Expert</option>
                             </select>
 
+                            {/* Search (properly aligned) */}
                             <form
                                 onSubmit={(e) => {
                                     e.preventDefault();
                                     onSearch(term.trim());
                                 }}
-                                className="join w-full sm:w-auto gap-2"
+                                className="input-group input-group-sm"
                             >
-                                <input
+                                <div className="flex items-center gap-1">
+                                    <input
                                     type="text"
-                                    className="input input-bordered input-sm join-item w-full sm:w-56"
+                                    className="input input-bordered w-48 sm:w-56"
                                     placeholder="Search by name/subject"
                                     value={term}
                                     onChange={(e) => setTerm(e.target.value)}
                                 />
-                                <button type="submit" className="btn btn-primary btn-sm join-item">
+                                <button type="submit" className="btn btn-primary btn-sm py-4">
                                     Search
                                 </button>
+                                </div>
                             </form>
                         </div>
+
+
                     </div>
 
                     {/* Partner Cards */}
