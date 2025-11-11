@@ -64,7 +64,9 @@ const FindPartners = () => {
     };
     if (loading) {
         return (
-            <HashLoader></HashLoader>
+            <div className="flex items-center justify-center min-h-[300px]">
+                <HashLoader color="#73abff" size={80} />
+            </div>
         );
     }
     else {
