@@ -6,6 +6,7 @@ import UserProfile from "../components/UserProfile/UserProfile";
 import Home from "../pages/Home/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import CreatePartner from "../pages/CreatePartner/CreatePartner";
+import FindPartners from "../pages/FindPartners/FindPartners";
 
 const router = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
             {
                 path: '/create-partner',
                 Component: CreatePartner
+            },
+            {
+                path: '/partners',
+                Component: FindPartners
             }
         ]
     },

@@ -1,6 +1,6 @@
 // src/components/Home/BannerSwiper.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { NavLink } from "react-router"; // your preference
+import { NavLink } from "react-router";
 import useAxios from "../../hooks/axios/useAxios";
 
 // Swiper (React)

@@ -18,7 +18,7 @@ const CreatePartner = () => {
     // Validation function
     const validateForm = (data) => {
         if (!data.name) return "Name is required.";
-        if (!data.profileImage) return "Photo URL is required.";
+        if (!data.profileimage) return "Photo URL is required.";
         if (!data.subject) return "Subject is required.";
         if (!data.studyMode) return "Please select a study mode.";
         if (!data.availabilityTime) return "Availability time is required.";
@@ -47,19 +47,16 @@ const CreatePartner = () => {
             rating: Number(fd.get("rating") || 0),
             partnerCount: 0,
             email: (fd.get("email") || "").toString(),
-            profileImage: (fd.get("profileImage") || "").toString()
+            profileimage: (fd.get("profileImage") || "").toString()
         };
         const errorMsg = validateForm(dataInput);
         if (errorMsg) {
             setError(errorMsg);
             return;
         }
-
-        console.log("✅ Valid Data:", dataInput);
-        // you can now call your API or pass it to parent
+        // DB Logics
         const res = await axiosSecure.post("/create/partner", dataInput);
         const payload = res?.data.result;
-        console.log(payload);
 
         if (payload?.acknowledged && payload?.insertedId) {
             await Swal.fire({
@@ -68,7 +65,7 @@ const CreatePartner = () => {
                 icon: "success",
                 confirmButtonText: "OK",
             });
-            form.reset();
+            // form.reset();
         } else {
             await Swal.fire({
                 icon: "error",
