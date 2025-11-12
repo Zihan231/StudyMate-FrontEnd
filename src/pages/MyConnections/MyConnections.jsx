@@ -57,12 +57,17 @@ const MyConnections = () => {
             </span>
         );
     };
-    console.log(selected);
     // Handlers (you wire logic)
     const handleDelete = async (id) => {
-        // Optional: confirm UI
-        // if (!confirm("Delete this request?")) return;
-
+        try {
+            const res = await axiosSecure.delete(`/partner/delete/${id}`);
+            const result = res.data;
+            if (result.acknowledged && result.deletedCount == 1) {
+                setData(data.filter(item => item._id != id));
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handleUpdate = async (e) => {
