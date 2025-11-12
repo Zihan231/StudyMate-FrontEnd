@@ -65,7 +65,7 @@ const CreatePartner = () => {
                 icon: "success",
                 confirmButtonText: "OK",
             });
-            // form.reset();
+            form.reset();
         } else {
             await Swal.fire({
                 icon: "error",

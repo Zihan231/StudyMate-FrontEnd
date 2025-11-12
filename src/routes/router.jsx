@@ -7,6 +7,7 @@ import Home from "../pages/Home/Home";
 import NotFound from "../pages/NotFound/NotFound";
 import CreatePartner from "../pages/CreatePartner/CreatePartner";
 import FindPartners from "../pages/FindPartners/FindPartners";
+import PartnerDetails from "../pages/PartnerDetails/PartnerDetails";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: '/partners',
                 Component: FindPartners
+            },
+            {
+                path: '/partners/:id',
+                element: <PartnerDetails></PartnerDetails>
             }
         ]
     },

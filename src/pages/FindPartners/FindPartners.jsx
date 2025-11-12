@@ -9,6 +9,8 @@ import {
 } from "react-icons/fa";
 import useAxios from "../../hooks/axios/useAxios";
 import { HashLoader } from "react-spinners";
+import Swal from "sweetalert2";
+import NotFound from "../NotFound/NotFound";
 
 const FindPartners = () => {
     const [data, setData] = useState([]);
@@ -24,13 +26,11 @@ const FindPartners = () => {
         }
         fetchData();
     }, [axios]);
-    console.log(data);
 
     // --- UI state ---
     const [term, setTerm] = useState("");
     const [sort, setSort] = useState("");
 
-    const onSearch = (t) => console.log("Search for:", t);
     const onSortChange = (v) => console.log("Sort by:", v);
 
     // --- Helpers ---
@@ -69,6 +69,9 @@ const FindPartners = () => {
             </div>
         );
     }
+    else if (data.length == 0) {
+        return <NotFound></NotFound>;
+    }
     else {
         return (
             <main className="min-h-[calc(100vh-4rem)] bg-base-100 px-4 py-10">
@@ -103,23 +106,38 @@ const FindPartners = () => {
 
                             {/* Search (properly aligned) */}
                             <form
-                                onSubmit={(e) => {
+                                onSubmit={async (e) => {
                                     e.preventDefault();
-                                    onSearch(term.trim());
+                                    try {
+                                        setLoading(true);
+                                        const res = await axios.get(`/partners?search=${term.trim()}`);
+                                        const searchedData = await res.data;
+                                        setData(searchedData);
+                                    } catch (error) {
+                                        await Swal.fire({
+                                            icon: "error",
+                                            title: "Oops...",
+                                            text: `Something went wrong while Searching: ${error}`,
+                                        });
+                                    } finally {
+                                        setLoading(false);
+                                    }
+
+                                    // onSearch(term.trim());
                                 }}
                                 className="input-group input-group-sm"
                             >
                                 <div className="flex items-center gap-1">
                                     <input
-                                    type="text"
-                                    className="input input-bordered w-48 sm:w-56"
-                                    placeholder="Search by name/subject"
-                                    value={term}
-                                    onChange={(e) => setTerm(e.target.value)}
-                                />
-                                <button type="submit" className="btn btn-primary btn-sm py-4">
-                                    Search
-                                </button>
+                                        type="text"
+                                        className="input input-bordered w-48 sm:w-56"
+                                        placeholder="Search by subject"
+                                        value={term}
+                                        onChange={(e) => setTerm(e.target.value)}
+                                    />
+                                    <button type="submit" className="btn btn-primary btn-sm py-4">
+                                        Search
+                                    </button>
                                 </div>
                             </form>
                         </div>
