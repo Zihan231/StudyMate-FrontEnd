@@ -11,9 +11,11 @@ import {
 } from "react-icons/fa";
 import { HashLoader } from "react-spinners";
 import useAxios from "../../hooks/axios/useAxios";
+import NoPartner from "../../components/NoPartner/NoPartner";
 
 
 const PartnerDetails = () => {
+    const [err, setErr] = useState("");
     const axiosInstance = useAxios();
     const { id } = useParams();
     // console.log(id);
@@ -23,15 +25,23 @@ const PartnerDetails = () => {
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true);
-            const res = await axiosInstance.get(`/partner/${id}`);
-            const result = await res.data;
-            setPartner(result);
-            setLoading(false);
+            try {
+                setLoading(true);
+                const res = await axiosInstance.get(`/partner/${id}`);
+                const result = await res.data;
+                setPartner(result);
+            } catch (error) {
+                // This will trigger on any non-2xx response or network error
+                console.error(error);
+                setErr("No Partner Found !!!");
+            } finally {
+                setLoading(false);
+            }
         };
         fetchData();
-    }, [])
-   
+
+    }, [axiosInstance, id])
+
     const onSendRequest = () => {
 
     }
@@ -86,20 +96,15 @@ const PartnerDetails = () => {
     }
 
     // Error
-    // if (err) {
-    //     return (
-    //         <main className="min-h-[calc(100vh-4rem)] bg-base-100 px-4 py-10">
-    //             <div className="max-w-3xl mx-auto">
-    //                 <NavLink to="/partners" className="btn btn-ghost btn-sm mb-4">
-    //                     ← Back to list
-    //                 </NavLink>
-    //                 <div className="alert alert-error">
-    //                     <span>{err}</span>
-    //                 </div>
-    //             </div>
-    //         </main>
-    //     );
-    // }
+    if (err) {
+        return (
+            <main className="min-h-[calc(100vh-4rem)] bg-base-100 px-4 py-10">
+                <div className="max-w-3xl mx-auto">
+                    <NoPartner></NoPartner>
+                </div>
+            </main>
+        );
+    }
 
     if (!partner) return null;
 

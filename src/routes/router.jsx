@@ -8,6 +8,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import CreatePartner from "../pages/CreatePartner/CreatePartner";
 import FindPartners from "../pages/FindPartners/FindPartners";
 import PartnerDetails from "../pages/PartnerDetails/PartnerDetails";
+import MyConnections from "../pages/MyConnections/MyConnections";
 
 const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: '/partners/:id',
                 element: <PartnerDetails></PartnerDetails>
+            },
+            {
+                path: "/connections",
+                element: <MyConnections></MyConnections>
             }
         ]
     },

@@ -122,7 +122,7 @@ const Banner = () => {
               <div
                 className="
                   relative w-full
-                  h-[260px] sm:h-[320px] md:h-[460px] lg:h-[520px] xl:h-[600px]
+                  h-[260px] sm:h-80 md:h-[460px] lg:h-[520px] xl:h-[600px]
                   rounded-2xl overflow-hidden
                 "
               >
