@@ -12,7 +12,7 @@ const MyConnections = () => {
     const [selected, setSelected] = useState({});
     const [updateID, setUpdateID] = useState(null);
     const subjects = useMemo(
-        () => ["English", "Mathematics", "Physics", "Programming", "Chemistry", "Biology", "Economics"],
+        () => ["English", "Mathematics", "Physics", "Programming", "Chemistry", "Biology", "Statistics", "Economics", "History"],
         []
     );
     const [error, setError] = useState("");
@@ -136,13 +136,8 @@ const MyConnections = () => {
             name, sub: subject, stdMode: studyMode, imgURL: profileImage
         };
         const input2 = { name, subject, studyMode, profileimage: profileImage, _id: updateID };
-        // console.log(inputData);
         try {
-            const res = await axiosSecure.patch(`/partner/update/${updateID}`, inputData);
-            console.log(res);
-            const result = res.data;
-            // setData(data.filter(item => item._id != updateID))
-            // setData([data.filter(item => item._id != updateID), input2]);
+            await axiosSecure.patch(`/partner/update/${updateID}`, inputData);
             setData(prev =>
                 prev.map(item => (item._id === updateID ? { ...item, ...input2 } : item))
             );

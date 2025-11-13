@@ -47,7 +47,7 @@ const NavBar = () => {
         <div className="flex-1">
           <NavLink to="/" className="btn btn-ghost px-2">
             <div className="flex items-center gap-2">
-              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-gradient-to-br from-primary to-secondary shadow">
+              <div className="w-9 h-9 rounded-xl grid place-items-center font-bold text-primary-content bg-linear-to-br from-primary to-secondary shadow">
                 SM
               </div>
               <span className="text-lg md:text-xl font-extrabold tracking-tight">
@@ -97,7 +97,7 @@ const NavBar = () => {
               <ul
                 tabIndex={0}
                 role="menu"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-56 p-2 shadow-xl border border-base-300/60"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-60 mt-3 w-56 p-2 shadow-xl border border-base-300/60"
               >
                 <li>
                   <NavLink
@@ -193,7 +193,7 @@ const NavBar = () => {
 
   <ul
     tabIndex={0}
-    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[60] mt-3 w-64 p-2 shadow-xl border border-base-300/60"
+    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-60 mt-3 w-64 p-2 shadow-xl border border-base-300/60"
   >
     {/* Core nav items */}
     {navItems.map((item) => (

@@ -12,7 +12,7 @@ const CreatePartner = () => {
     const axiosSecure = useAxiosSecure();
 
     const subjects = useMemo(
-        () => ["English", "Mathematics", "Physics", "Programming", "Chemistry", "Biology", "Economics"],
+        () => ["English", "Mathematics", "Physics", "Programming", "Chemistry", "Biology", "Statistics", "Economics", "History"],
         []
     );
     // Validation function
@@ -50,7 +50,7 @@ const CreatePartner = () => {
             email: (fd.get("email") || "").toString(),
             profileimage: (fd.get("profileImage") || "").toString(),
             bio: (fd.get("bio") || "").toString(),
-            
+
         };
         const errorMsg = validateForm(dataInput);
         if (errorMsg) {
