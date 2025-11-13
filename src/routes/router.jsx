@@ -36,7 +36,9 @@ const router = createBrowserRouter([
             },
             {
                 path: '/create-partner',
-                Component: CreatePartner
+                element: <PrivateRoute>
+                    <CreatePartner></CreatePartner>
+                </PrivateRoute>
             },
             {
                 path: '/partners',

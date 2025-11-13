@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, replace, useLocation, useNavigate } from "react-router";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
 import { updateProfile } from "firebase/auth"; // ✅ use your own Update() helper if you prefer
 
 const Register = () => {
   const { createUser, isLoading, signInWithGoogle, SetUser } = useContext(AuthContext);
-
+  const location = useLocation();
+  const reDirectTo = location.state?.from || '/';
+  const navigate = useNavigate();
   const [pwError, setPwError] = useState("");
   const [submitError, setSubmitError] = useState("");
 
@@ -18,42 +20,41 @@ const Register = () => {
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  setSubmitError("");
-  const fd = new FormData(e.currentTarget);
+    e.preventDefault();
+    setSubmitError("");
+    const fd = new FormData(e.currentTarget);
+    const name = (fd.get("name") || "").toString().trim();
+    const email = (fd.get("email") || "").toString().trim();
+    const imgUrl = (fd.get("photoURL") || "").toString().trim();
+    const password = (fd.get("password") || "").toString();
 
-  const name = (fd.get("name") || "").toString().trim();
-  const email = (fd.get("email") || "").toString().trim();
-  const imgUrl = (fd.get("photoURL") || "").toString().trim();
-  const password = (fd.get("password") || "").toString();
+    // ✅ Password validation
+    const pwProblems = validatePassword(password);
+    if (pwProblems.length > 0) {
+      setPwError(`${pwProblems.join(", ")}.`);
+      return;
+    }
+    setPwError("");
 
-  // ✅ Password validation
-  const pwProblems = validatePassword(password);
-  if (pwProblems.length > 0) {
-    setPwError(`${pwProblems.join(", ")}.`);
-    return;
-  }
-  setPwError("");
+    // 🔐 Firebase Auth starts from here
+    createUser(email, password)
+      .then((result) => {
+        const receivedUser = result.user;
 
-  // 🔐 Firebase Auth starts from here
-  createUser(email, password)
-    .then((result) => {
-      const receivedUser = result.user;
-
-      return updateProfile(receivedUser, {
-        displayName: name,
-        photoURL: imgUrl,
-      }).then((r) => {
-        SetUser({ ...receivedUser, displayName: name, photoURL: imgUrl });
-        console.log("✅ User successfully created:", receivedUser);
-        console.log("Update response:", r);
+        return updateProfile(receivedUser, {
+          displayName: name,
+          photoURL: imgUrl,
+        }).then((r) => {
+          SetUser({ ...receivedUser, displayName: name, photoURL: imgUrl });
+          console.log("✅ User successfully created:", receivedUser);
+          console.log("Update response:", r);
+        });
+      })
+      .catch((err) => {
+        console.error("❌ Firebase createUser error:", err);
+        setSubmitError("Something went wrong !!!");
       });
-    })
-    .catch((err) => {
-      console.error("❌ Firebase createUser error:", err);
-      setSubmitError("Something went wrong !!!");
-    });
-};
+  };
 
 
   // Google Sign Up
@@ -61,6 +62,7 @@ const Register = () => {
     setSubmitError("");
     signInWithGoogle()
       .then((result) => {
+        navigate(reDirectTo, { replace: true })
         SetUser?.(result.user);
         // navigate(...) if needed
       })
@@ -155,12 +157,12 @@ const Register = () => {
                   )}
                 </div>
               </label>
-                  {/* ⛔ Error box below the form (shows pwError or submitError) */}
-            {(submitError) && (
+              {/* ⛔ Error box below the form (shows pwError or submitError) */}
+              {(submitError) && (
                 <div className="mt-4 alert alert-error py-1 font-semibold">
                   {submitError}
-              </div>
-            )}
+                </div>
+              )}
               {/* Submit */}
               <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
                 {isLoading && <span className="loading loading-spinner loading-sm" />}
@@ -196,7 +198,7 @@ const Register = () => {
               </NavLink>
             </p>
 
-            
+
           </div>
         </div>
 

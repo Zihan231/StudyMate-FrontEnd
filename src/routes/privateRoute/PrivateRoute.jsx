@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../contexts/Auth/AuthContext/AuthContext';
-import { Navigate } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 import { HashLoader } from 'react-spinners';
 
 const PrivateRoute = ({ children }) => {
+    const location = useLocation();
+    console.log(location);
     const { user, isLoading } = useContext(AuthContext);
     if (isLoading) {
         return (
@@ -13,7 +15,7 @@ const PrivateRoute = ({ children }) => {
         );
     }
     if (!user) {
-        return <Navigate to="/login"></Navigate>
+        return <Navigate state={{from: location.pathname}} to="/login"></Navigate>
     }
     return children;
 };

@@ -1,16 +1,13 @@
 import React, { use, useState } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
 
-/**
- * Props (all optional for now):
- * - onEmailLogin: (formData: { email, password }) => void
- * - onGoogleLogin: () => void
- * - isLoading: boolean  // disables buttons & shows loading states
- */
 const Login = () => {
     const [error, SetError] = useState("");
     const [submitError, setSubmitError] = useState("");
+    const location = useLocation();
+    const navigate = useNavigate();
+    const reDirectTo = location.state?.from || '/';
 
     const { isLoading, signInWithEmailPass, signInWithGoogle, SetUser } = use(AuthContext);
     // console.log(user);
@@ -21,10 +18,8 @@ const Login = () => {
         // console.log(email, password);
         signInWithEmailPass(email, password)
             .then(() => {
-                
+                navigate(reDirectTo, { replace: true });
                 console.log("OK")
-                // Signed in
-                // navigate(redirectTo, { replace: true });
             })
             .catch(() => {
                 SetError("Invalid Email or Password");
@@ -33,14 +28,14 @@ const Login = () => {
             }
             );
     };
-    // console.log(user);
-    // google Login
+
     const onGoogleLogin = () => {
         setSubmitError("");
         signInWithGoogle()
             .then((result) => {
                 SetUser?.(result.user);
                 // navigate(...) if needed
+                navigate(reDirectTo, { replace: true });
             })
             .catch((err) => {
                 setSubmitError(err?.message || "Google sign-in failed.");
