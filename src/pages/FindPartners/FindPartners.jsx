@@ -81,7 +81,6 @@ const FindPartners = () => {
 
                             </select>
 
-                            {/* Search (properly aligned) */}
                             <form
                                 onSubmit={async (e) => {
                                     e.preventDefault();
@@ -99,20 +98,21 @@ const FindPartners = () => {
                                     } finally {
                                         setLoading(false);
                                     }
-
-                                    // onSearch(term.trim());
                                 }}
-                                className="input-group input-group-sm"
+                                className="w-full"
                             >
-                                <div className="flex items-center gap-1">
+                                <div className="flex flex-col sm:flex-row sm:items-stretch gap-2 w-full">
                                     <input
                                         type="text"
-                                        className="input input-bordered w-48 sm:w-56"
+                                        className="input input-bordered w-full sm:w-auto flex-1"
                                         placeholder="Search by subject"
                                         value={term}
                                         onChange={(e) => setTerm(e.target.value)}
                                     />
-                                    <button type="submit" className="btn btn-primary btn-sm py-4">
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary btn-sm sm:btn-md w-full sm:w-auto py-3 sm:py-4"
+                                    >
                                         Search
                                     </button>
                                 </div>

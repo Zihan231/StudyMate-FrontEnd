@@ -192,7 +192,7 @@ const MyConnections = () => {
     // Empty state
     else if (data.length <= 0) {
         return (
-            <main className="min-h-[calc(100vh-4rem)] bg-base-100 px-4 py-10">
+            <main className="min-h-[calc(100vh-4rem)] bg-base-100 px-4 py-40">
                 <div className="max-w-4xl mx-auto text-center">
                     <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-2xl bg-linear-to-br from-primary/15 to-secondary/15 shadow-sm">
                         <svg width="26" height="26" viewBox="0 0 24 24" className="opacity-80">

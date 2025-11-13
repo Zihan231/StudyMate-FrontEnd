@@ -54,7 +54,7 @@ const HeroBanner = () => {
                         <SwiperSlide key={slide._id}>
                             <div className="relative w-full rounded-3xl overflow-hidden flex flex-col md:flex-row">
                                 {/* Image */}
-                                <div className="w-full md:w-full h-[320px] sm:h-[400px] md:h-[560px] lg:h-[640px] relative">
+                                <div className="w-full md:w-full h-80 sm:h-[400px] md:h-[560px] lg:h-[640px] relative">
                                     <img
                                         src={slide.image}
                                         alt={slide.title}

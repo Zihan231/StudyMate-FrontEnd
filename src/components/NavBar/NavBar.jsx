@@ -51,7 +51,7 @@ const NavBar = () => {
                 SM
               </div>
               <span className="text-lg md:text-xl font-extrabold tracking-tight">
-                StudyMate
+                Study<span className="text-secondary">Mate</span>
               </span>
             </div>
           </NavLink>

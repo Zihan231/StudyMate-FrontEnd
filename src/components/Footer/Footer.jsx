@@ -1,7 +1,7 @@
 // src/components/Layout/Footer.jsx
 import React from "react";
 import { NavLink } from "react-router";
-import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram, FaGithubSquare } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
@@ -16,7 +16,7 @@ const Footer = () => {
                             <div className="w-10 h-10 rounded-2xl grid place-items-center text-primary-content bg-linear-to-br from-primary to-secondary shadow">
                                 SM
                             </div>
-                            <h2 className="text-xl font-extrabold">StudyMate</h2>
+                            <h2 className="text-xl font-extrabold">Study<span className="text-secondary">Mate</span></h2>
                         </div>
                         <p className="text-sm text-base-content/70 leading-relaxed max-w-xs">
                             StudyMate is a smart academic networking platform where learners
@@ -45,7 +45,8 @@ const Footer = () => {
                         </h3>
                         <div className="flex gap-4 text-base-content/70">
                             <a
-                                href="#"
+                                href="https://www.facebook.com/Zihan231"
+                                target="_blank"
                                 aria-label="Facebook"
                                 className="hover:text-primary transition"
                             >
@@ -53,6 +54,7 @@ const Footer = () => {
                             </a>
                             <a
                                 href="#"
+                                target="_blank"
                                 aria-label="Twitter"
                                 className="hover:text-primary transition"
                             >
@@ -60,18 +62,28 @@ const Footer = () => {
 
                             </a>
                             <a
-                                href="#"
+                                href="https://www.linkedin.com/in/zihan231"
+                                target="_blank"
                                 aria-label="LinkedIn"
                                 className="hover:text-primary transition"
                             >
                                 <FaLinkedinIn size={18} />
                             </a>
                             <a
-                                href="#"
+                                href="https://www.instagram.com/zihan_islam_19"
+                                target="_blank"
                                 aria-label="Instagram"
                                 className="hover:text-primary transition"
                             >
-                                <FaInstagram size={18} />
+                                <FaInstagram size={20} />
+                            </a>
+                            <a
+                                href="https://github.com/Zihan231"
+                                target="_blank"
+                                aria-label="GitHub"
+                                className="hover:text-primary transition"
+                            >
+                                <FaGithubSquare size={20} />
                             </a>
                         </div>
                     </div>
@@ -82,7 +94,7 @@ const Footer = () => {
 
                 {/* Bottom copyright */}
                 <div className="text-center text-sm text-base-content/60">
-                    © {new Date().getFullYear()} StudyMate — All rights reserved.
+                    © {new Date().getFullYear()} <span className="text-primary">StudyMate</span> — All rights reserved.
                 </div>
             </div>
         </footer>

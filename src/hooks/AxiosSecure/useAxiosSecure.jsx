@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
 
 const instance = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://study-mate-api-server.vercel.app/",
 })
 const useAxiosSecure = () => {
     const { user } = useContext(AuthContext);

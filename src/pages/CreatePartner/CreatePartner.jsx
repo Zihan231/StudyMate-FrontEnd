@@ -275,11 +275,6 @@ const CreatePartner = () => {
                         </form>
                     </div>
                 </div>
-
-                {/* Small helper */}
-                <p className="mt-3 text-xs text-base-content/60 text-center">
-                    You can edit this profile later from <span className="font-semibold">My Connections</span> or your account settings.
-                </p>
             </div>
         </main>
     );

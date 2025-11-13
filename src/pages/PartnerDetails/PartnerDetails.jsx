@@ -49,7 +49,6 @@ const PartnerDetails = () => {
 
     const onSendRequest = async (e) => {
         e.preventDefault();
-
         if (!partner?._id) {
             await Swal.fire({
                 icon: "error",
@@ -72,6 +71,8 @@ const PartnerDetails = () => {
         };
 
         try {
+        setLoading(true);
+
             // 1) Create connection
             const res = await axiosSecure.post("/partner/connect", InputData);
             const payload = res?.data;
@@ -115,6 +116,8 @@ const PartnerDetails = () => {
                 title: "Request failed",
                 text: err?.response?.data?.message || "Please try again later.",
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -246,7 +249,7 @@ const PartnerDetails = () => {
                                 className="btn  btn-primary"
                                 onClick={onSendRequest}
                             >
-                                Send Partner Request
+                            Send Partner Request
                             </button>
                         </div>
                     </div>
