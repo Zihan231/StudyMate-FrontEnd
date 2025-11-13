@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
-import { NavLink, replace, useLocation, useNavigate } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
 import { updateProfile } from "firebase/auth"; // ✅ use your own Update() helper if you prefer
+import Swal from "sweetalert2";
 
 const Register = () => {
   const { createUser, isLoading, signInWithGoogle, SetUser } = useContext(AuthContext);
@@ -44,10 +45,13 @@ const Register = () => {
         return updateProfile(receivedUser, {
           displayName: name,
           photoURL: imgUrl,
-        }).then((r) => {
+        }).then(() => {
           SetUser({ ...receivedUser, displayName: name, photoURL: imgUrl });
-          console.log("✅ User successfully created:", receivedUser);
-          console.log("Update response:", r);
+          Swal.fire({
+            title: "Account created successfully !",
+            icon: "success",
+            draggable: true
+          }).then(navigate(reDirectTo, { replace: true }));          
         });
       })
       .catch((err) => {
@@ -62,9 +66,12 @@ const Register = () => {
     setSubmitError("");
     signInWithGoogle()
       .then((result) => {
-        navigate(reDirectTo, { replace: true })
+        Swal.fire({
+          title: "Account created successfully !",
+          icon: "success",
+          draggable: true
+        }).then(navigate(reDirectTo, { replace: true }));
         SetUser?.(result.user);
-        // navigate(...) if needed
       })
       .catch((err) => {
         setSubmitError(err?.message || "Google sign-in failed.");
