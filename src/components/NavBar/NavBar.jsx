@@ -1,4 +1,4 @@
-import React, { use, useContext, useEffect, useMemo } from "react";
+import React, { use, useContext, useMemo } from "react";
 import { NavLink } from "react-router";
 import ThemeContext from "../../contexts/Theme/themeContext";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
@@ -15,12 +15,7 @@ const NavBar = () => {
   const { darkMode, setDarkMode } = use(ThemeContext);
   const { user, logout } = useContext(AuthContext);
 
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      darkMode ? "studymate-dark" : "studymate"
-    );
-  }, [darkMode]);
+
 
   const handleLogout = () => logout();
 
@@ -28,15 +23,15 @@ const NavBar = () => {
     () =>
       user
         ? [
-            { to: "/", label: "Home" },
-            { to: "/partners", label: "Find Partners" },
-            { to: "/create-partner", label: "Create Partner Profile" },
-            { to: "/connections", label: "My Connections" },
-          ]
+          { to: "/", label: "Home" },
+          { to: "/partners", label: "Find Partners" },
+          { to: "/create-partner", label: "Create Partner Profile" },
+          { to: "/connections", label: "My Connections" },
+        ]
         : [
-            { to: "/", label: "Home" },
-            { to: "/partners", label: "Find Partners" },
-          ],
+          { to: "/", label: "Home" },
+          { to: "/partners", label: "Find Partners" },
+        ],
     [user]
   );
 
@@ -143,7 +138,9 @@ const NavBar = () => {
           <button
             aria-label="Toggle theme"
             className="btn btn-ghost btn-circle"
-            onClick={() => setDarkMode(!darkMode)}
+            onClick={() => {
+              setDarkMode(prev => !prev)
+            }}
             title={darkMode ? "Light mode" : "Dark mode"}
           >
             {!darkMode ? (
@@ -179,66 +176,66 @@ const NavBar = () => {
             )}
           </button>
           {/* Mobile menu (visible on < md) */}
-<div className="md:hidden dropdown dropdown-end">
-  <button
-    tabIndex={0}
-    aria-label="Open menu"
-    className="btn btn-ghost btn-square"
-  >
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 6h16M4 12h16M4 18h16"
-        stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  </button>
+          <div className="md:hidden dropdown dropdown-end">
+            <button
+              tabIndex={0}
+              aria-label="Open menu"
+              className="btn btn-ghost btn-square"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16M4 12h16M4 18h16"
+                  stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
 
-  <ul
-    tabIndex={0}
-    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-60 mt-3 w-64 p-2 shadow-xl border border-base-300/60"
-  >
-    {/* Core nav items */}
-    {navItems.map((item) => (
-      <li key={item.to}>
-        <NavLink to={item.to} className={linkClasses}>
-          {item.label}
-        </NavLink>
-      </li>
-    ))}
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-60 mt-3 w-64 p-2 shadow-xl border border-base-300/60"
+            >
+              {/* Core nav items */}
+              {navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink to={item.to} className={linkClasses}>
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
 
-    {/* When logged OUT: show Login/Register buttons */}
-    {!user && (
-      <li className="mt-2">
-        <div className="flex gap-2">
-          <NavLink to="/login" className="btn btn-outline btn-sm flex-1">
-            Login
-          </NavLink>
-          <NavLink to="/register" className="btn btn-primary btn-sm text-primary-content flex-1">
-            Register
-          </NavLink>
-        </div>
-      </li>
-    )}
+              {/* When logged OUT: show Login/Register buttons */}
+              {!user && (
+                <li className="mt-2">
+                  <div className="flex gap-2">
+                    <NavLink to="/login" className="btn btn-outline btn-sm flex-1">
+                      Login
+                    </NavLink>
+                    <NavLink to="/register" className="btn btn-primary btn-sm text-primary-content flex-1">
+                      Register
+                    </NavLink>
+                  </div>
+                </li>
+              )}
 
-    {/* When logged IN: Profile + Logout */}
-    {user && (
-      <>
-        <div className="divider my-2" />
-        <li>
-          <NavLink to="/profile" className="font-semibold">
-            Profile
-          </NavLink>
-        </li>
-        <li>
-          <button
-            onClick={handleLogout}
-            className="px-3 py-2 rounded-lg text-left text-error hover:bg-error/10 font-semibold"
-          >
-            Log Out
-          </button>
-        </li>
-      </>
-    )}
-  </ul>
-</div>
+              {/* When logged IN: Profile + Logout */}
+              {user && (
+                <>
+                  <div className="divider my-2" />
+                  <li>
+                    <NavLink to="/profile" className="font-semibold">
+                      Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="px-3 py-2 rounded-lg text-left text-error hover:bg-error/10 font-semibold"
+                    >
+                      Log Out
+                    </button>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
 
         </div>
       </div>
