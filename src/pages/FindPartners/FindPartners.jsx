@@ -26,12 +26,20 @@ const FindPartners = () => {
     const [term, setTerm] = useState("");
     const [sort, setSort] = useState("");
 
-    const onSortChange = (v) => console.log("Sort by:", v);
-
-
-
-
-
+    const onSortChange = async (v) => {
+        // console.log(v);
+        try {
+            setLoading(true);
+            const res = await axios.get(`/partners/sort?expSort=${v}`);
+            const result = await res.data;
+            setData(result);
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
+    };
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-[600px]">
@@ -67,11 +75,10 @@ const FindPartners = () => {
                                 }}
                             >
                                 <option value="">Sort</option>
-                                <option value="newest">Newest</option>
-                                <option value="rating_desc">Rating: High → Low</option>
-                                <option value="rating_asc">Rating: Low → High</option>
-                                <option value="exp_desc">Experience: Expert → Beginner</option>
-                                <option value="exp_asc">Experience: Beginner → Expert</option>
+                                <option value="Expert">Experience: Expert → Intermediate → Beginner</option>
+                                <option value="Intermediate">Experience: Intermediate → Expert → Beginner</option>
+                                <option value="Beginner">Experience: Beginner → Intermediate → Expert</option>
+
                             </select>
 
                             {/* Search (properly aligned) */}
