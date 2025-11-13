@@ -1,6 +1,7 @@
 import React, { use, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import AuthContext from "../../contexts/Auth/AuthContext/AuthContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
     const [error, SetError] = useState("");
@@ -18,8 +19,11 @@ const Login = () => {
         // console.log(email, password);
         signInWithEmailPass(email, password)
             .then(() => {
-                navigate(reDirectTo, { replace: true });
-                console.log("OK")
+                Swal.fire({
+                    title: "Login Successful !",
+                    icon: "success",
+                    draggable: true
+                }).then(navigate(reDirectTo, { replace: true }));
             })
             .catch(() => {
                 SetError("Invalid Email or Password");
@@ -33,9 +37,12 @@ const Login = () => {
         setSubmitError("");
         signInWithGoogle()
             .then((result) => {
+                Swal.fire({
+                    title: "Login Successful !",
+                    icon: "success",
+                    draggable: true
+                }).then(navigate(reDirectTo, { replace: true }));
                 SetUser?.(result.user);
-                // navigate(...) if needed
-                navigate(reDirectTo, { replace: true });
             })
             .catch((err) => {
                 setSubmitError(err?.message || "Google sign-in failed.");
