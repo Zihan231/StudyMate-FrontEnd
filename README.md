@@ -128,7 +128,7 @@ npm run preview
 </p>
 
 <p align="center">
-  <b>GameHub</b> was created with ❤️ by <a href="https://github.com/Zihan231">Zihan231</a>
+  <b>StudyMate</b> was created with ❤️ by <a href="https://github.com/Zihan231">Zihan231</a>
 </p>
 
 <p align="center">
