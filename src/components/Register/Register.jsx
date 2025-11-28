@@ -28,7 +28,10 @@ const Register = () => {
     const email = (fd.get("email") || "").toString().trim();
     const imgUrl = (fd.get("photoURL") || "").toString().trim();
     const password = (fd.get("password") || "").toString();
-
+    if (!name || !email || !password || !imgUrl) {
+      setSubmitError("Please fill in all fields.");
+      return;
+    }
     // ✅ Password validation
     const pwProblems = validatePassword(password);
     if (pwProblems.length > 0) {
@@ -55,7 +58,7 @@ const Register = () => {
       })
       .catch((err) => {
         Swal.fire({
-          title: "Login Failed !!!",
+          title: "Sign Up Failed !!!",
           icon: "error",
           draggable: true
         })
@@ -78,7 +81,7 @@ const Register = () => {
       })
       .catch((err) => {
         Swal.fire({
-          title: "Login Failed !!!",
+          title: "Sign Up Failed !!!",
           icon: "error",
           draggable: true
         })
@@ -102,8 +105,6 @@ const Register = () => {
         {/* Card */}
         <div className="card bg-base-200/50 shadow-sm border border-base-300">
           <div className="card-body">
-            <h2 className="card-title">Register</h2>
-
             {/* Form */}
             <form className="space-y-4" onSubmit={handleSubmit}>
               {/* Name */}
@@ -116,7 +117,6 @@ const Register = () => {
                   type="text"
                   placeholder="Your full name"
                   className="input input-bordered w-full"
-                  required
                   autoComplete="name"
                 />
               </label>
@@ -131,7 +131,6 @@ const Register = () => {
                   type="email"
                   placeholder="you@example.com"
                   className="input input-bordered w-full"
-                  required
                   autoComplete="email"
                 />
               </label>
@@ -159,7 +158,6 @@ const Register = () => {
                   type="password"
                   placeholder="••••••••"
                   className={`input input-bordered w-full ${pwError ? "input-error" : ""}`}
-                  required
                   autoComplete="new-password"
                 />
                 <div className="label w-1/2">
