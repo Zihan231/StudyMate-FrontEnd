@@ -16,6 +16,10 @@ const Login = () => {
         e.preventDefault();
         const email = e.target.email.value || "";
         const password = e.target.password.value || "";
+        if(!email || !password){   
+            SetError("Please fill in all fields.");
+            return;
+        } 
         // console.log(email, password);
         signInWithEmailPass(email, password)
             .then(() => {
@@ -87,7 +91,6 @@ const Login = () => {
                                     type="email"
                                     placeholder="you@example.com"
                                     className="input input-bordered w-full"
-                                    required
                                     autoComplete="email"
                                 />
                             </label>
@@ -102,7 +105,6 @@ const Login = () => {
                                     type="password"
                                     placeholder="••••••••"
                                     className="input input-bordered w-full"
-                                    required
                                     autoComplete="current-password"
                                 />
                             </label>
