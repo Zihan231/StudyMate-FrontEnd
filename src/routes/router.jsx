@@ -12,6 +12,8 @@ import MyConnections from "../pages/MyConnections/MyConnections";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import About from "../pages/About/About";
 import Contact from "../pages/Contact/Contact";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import DashboardProfile from "../components/DashboardProfile/DashboardProfile";
 
 const router = createBrowserRouter([
     {
@@ -63,6 +65,17 @@ const router = createBrowserRouter([
             {
                 path: "/contact",
                 Component: Contact
+            }
+        ]
+    }, {
+        path: "/dashboard",
+        element: <PrivateRoute>
+            <Dashboard></Dashboard>
+        </PrivateRoute>,
+        children: [
+            {
+                index: true,
+                Component: DashboardProfile
             }
         ]
     },

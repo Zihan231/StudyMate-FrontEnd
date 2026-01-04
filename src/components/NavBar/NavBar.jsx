@@ -112,6 +112,12 @@ const NavBar = () => {
                   >
                     Profile
                   </NavLink>
+                  <NavLink
+                    to="dashboard"
+                    className="rounded-md px-2 text-sm py-2 hover:bg-base-300/60 transition font-bold"
+                  >
+                    Dashboard
+                  </NavLink>
                 </li>
 
                 <div className="divider my-2" />
